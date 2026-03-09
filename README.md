@@ -29,6 +29,22 @@
 
 > 说明：Gemini CLI 当前没有与 `SKILL.md` 完全等价的原生 skill 目录机制，所以这里提供的是 **等价工作流命令包**。
 
+## Skills CLI 安装（推荐给习惯 `npx skills` 的用户）
+
+如果你已经在用 Skills CLI，可以直接从 GitHub 安装：
+
+```bash
+npx skills add https://github.com/wzyn20051216/ros-robotics-skill -g -y
+```
+
+如果你更喜欢仓库简称，也可以试试：
+
+```bash
+npx skills add wzyn20051216/ros-robotics-skill -g -y
+```
+
+> 说明：不同环境对 GitHub HTTPS/代理策略不一样，若简称失败，优先使用完整 URL。
+
 ## 一条命令安装
 
 ### Linux / macOS

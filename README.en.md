@@ -9,6 +9,22 @@ An open-source engineering-oriented skill / prompt pack for **ROS 1 / ROS 2 robo
 - Ships runnable helper scripts, not only prose
 - Produces minimal, verifiable change plans and regression commands
 
+## Install with Skills CLI
+
+If you already use the Skills CLI, you can install directly from GitHub:
+
+```bash
+npx skills add https://github.com/wzyn20051216/ros-robotics-skill -g -y
+```
+
+You can also try the short repo form:
+
+```bash
+npx skills add wzyn20051216/ros-robotics-skill -g -y
+```
+
+> If the short form fails in your environment, prefer the full GitHub URL.
+
 ## Quick install
 
 ### Linux / macOS
