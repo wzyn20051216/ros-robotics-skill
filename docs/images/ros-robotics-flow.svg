@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360">
+  <rect width="1200" height="360" fill="#0f172a"/>
+  <text x="60" y="50" font-family="Arial, sans-serif" font-size="28" fill="#e2e8f0">ROS Robotics Skill Workflow</text>
+  <g font-family="Arial, sans-serif" font-size="20" fill="#0f172a">
+    <rect x="60" y="110" rx="18" ry="18" width="220" height="110" fill="#93c5fd"/>
+    <text x="98" y="155">1. Detect workspace</text>
+    <text x="95" y="185">ROS1 / ROS2 / mixed</text>
+
+    <rect x="340" y="110" rx="18" ry="18" width="220" height="110" fill="#86efac"/>
+    <text x="375" y="155">2. Check consistency</text>
+    <text x="380" y="185">deps / install rules</text>
+
+    <rect x="620" y="110" rx="18" ry="18" width="220" height="110" fill="#fde68a"/>
+    <text x="670" y="155">3. Load topic docs</text>
+    <text x="655" y="185">TF / Nav2 / control / MCU</text>
+
+    <rect x="900" y="110" rx="18" ry="18" width="220" height="110" fill="#fca5a5"/>
+    <text x="950" y="155">4. Patch & verify</text>
+    <text x="930" y="185">small changes, real checks</text>
+  </g>
+  <g stroke="#cbd5e1" stroke-width="4" fill="none">
+    <path d="M280 165 H340"/>
+    <path d="M560 165 H620"/>
+    <path d="M840 165 H900"/>
+  </g>
+</svg>

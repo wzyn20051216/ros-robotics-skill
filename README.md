@@ -6,6 +6,10 @@
 
 一个面向 **ROS 1 / ROS 2 机器人开发、迁移与联调** 的开源工程化 skill / prompt pack。
 
+> English summary: see `README.en.md`
+
+![workflow](docs/images/ros-robotics-flow.svg)
+
 它不是“ROS 关键词词典”，而是一套面向真实机器人项目的工作流：
 
 - 先识别工作区和构建系统
@@ -61,6 +65,14 @@ irm https://raw.githubusercontent.com/wzyn20051216/ros-robotics-skill/main/insta
 $env:ROS_ROBOTICS_TARGET='codex'; irm https://raw.githubusercontent.com/wzyn20051216/ros-robotics-skill/main/install.ps1 | iex
 $env:ROS_ROBOTICS_TARGET='claude'; irm https://raw.githubusercontent.com/wzyn20051216/ros-robotics-skill/main/install.ps1 | iex
 $env:ROS_ROBOTICS_TARGET='gemini'; irm https://raw.githubusercontent.com/wzyn20051216/ros-robotics-skill/main/install.ps1 | iex
+```
+
+## 卸载
+
+```bash
+python scripts/install.py --target codex --uninstall
+python scripts/install.py --target claude --uninstall
+python scripts/install.py --target gemini --uninstall
 ```
 
 ## 核心能力
@@ -144,6 +156,6 @@ python scripts/check_ros_workspace_consistency.py /path/to/workspace
 - [x] TF / URDF / Nav2 / `ros2_control` / `micro-ROS` 参考文档
 - [x] Codex / Claude / Gemini 安装器
 - [x] 测试与 CI
-- [ ] 双语 README
+- [x] 英文摘要与 README.en
 - [ ] 最小示例工作区
 - [ ] 更强的依赖 / 资源安装规则检查器

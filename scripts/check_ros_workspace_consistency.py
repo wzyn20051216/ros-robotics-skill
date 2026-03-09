@@ -34,9 +34,12 @@ def iter_package_xml(root: Path):
 
 
 def xml_deps(package_xml: Path) -> set[str]:
-    """! @brief 从 package.xml 提取依赖名。"""
+    """! @brief 从 package.xml 提取依赖名；解析失败时返回空集合。"""
     deps: set[str] = set()
-    tree = ET.parse(package_xml)
+    try:
+        tree = ET.parse(package_xml)
+    except ET.ParseError:
+        return deps
     xml_root = tree.getroot()
     for tag in ['depend', 'build_depend', 'build_export_depend', 'exec_depend', 'run_depend', 'test_depend']:
         for node in xml_root.findall(tag):

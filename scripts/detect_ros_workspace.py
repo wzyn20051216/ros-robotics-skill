@@ -44,6 +44,11 @@ def read_text_if_exists(path: Path) -> str:
         return ''
 
 
+def looks_like_ament_python(setup_py_text: str) -> bool:
+    """! @brief 粗略判断 `setup.py` 是否更像 ament_python 包。"""
+    return 'share/ament_index/resource_index/packages' in setup_py_text or 'ament_index' in setup_py_text
+
+
 def detect_package(package_xml: Path) -> PackageInfo:
     """! @brief 根据 `package.xml` 与构建文件判断包类型。"""
     package_dir = package_xml.parent
@@ -71,9 +76,9 @@ def detect_package(package_xml: Path) -> PackageInfo:
     if 'find_package(ament_cmake' in cmake_text or 'ament_package(' in cmake_text:
         ros2_hits += 2
         markers.append('cmake:ament')
-    if 'ament_python' in xml_text or 'entry_points' in setup_py_text:
+    if 'ament_python' in xml_text or looks_like_ament_python(setup_py_text):
         ros2_hits += 1
-        markers.append('python:ament-or-entry-points')
+        markers.append('python:ament-pattern')
 
     if ros1_hits > 0 and ros2_hits == 0:
         build_type = 'ros1-catkin'
@@ -100,7 +105,6 @@ def detect_workspace(root: Path) -> DetectionResult:
     """! @brief 检测工作区类型并返回建议。"""
     markers: list[str] = []
     packages = [detect_package(path) for path in iter_package_xml_files(root)]
-
     src_cmake = root / 'src' / 'CMakeLists.txt'
     if src_cmake.exists():
         markers.append('workspace:src/CMakeLists.txt')

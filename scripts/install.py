@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""! @brief 安装 ros-robotics 到 Codex、Claude Code 或 Gemini CLI。"""
+"""! @brief 安装或卸载 ros-robotics 到 Codex、Claude Code 或 Gemini CLI。"""
 
 from __future__ import annotations
 
@@ -12,7 +12,9 @@ PROJECT_NAME = 'ros-robotics'
 RUNTIME_ITEMS = [
     'SKILL.md',
     'README.md',
+    'README.en.md',
     'CHANGELOG.md',
+    'VERSION',
     'LICENSE',
     'agents',
     'references',
@@ -51,12 +53,27 @@ def detect_default_targets(home: Path) -> list[str]:
 
 
 def copy_item(source: Path, destination: Path) -> None:
-    """! @brief 复制单个文件或目录。"""
+    """! @brief 复制单个文件或目录，并忽略缓存文件。"""
     if source.is_dir():
-        shutil.copytree(source, destination, dirs_exist_ok=True)
+        shutil.copytree(
+            source,
+            destination,
+            dirs_exist_ok=True,
+            ignore=shutil.ignore_patterns('__pycache__', '*.pyc'),
+        )
         return
     destination.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(source, destination)
+
+
+def remove_path(path: Path) -> None:
+    """! @brief 删除文件或目录。"""
+    if not path.exists():
+        return
+    if path.is_dir():
+        shutil.rmtree(path)
+    else:
+        path.unlink()
 
 
 def install_skill_tree(source_root: Path, destination_root: Path, force: bool) -> None:
@@ -64,12 +81,10 @@ def install_skill_tree(source_root: Path, destination_root: Path, force: bool) -
     if destination_root.exists() and force:
         shutil.rmtree(destination_root)
     destination_root.mkdir(parents=True, exist_ok=True)
-
     for name in RUNTIME_ITEMS:
         source = source_root / name
-        if not source.exists():
-            continue
-        copy_item(source, destination_root / name)
+        if source.exists():
+            copy_item(source, destination_root / name)
 
 
 def install_gemini(source_root: Path, destination: Path, force: bool) -> None:
@@ -83,14 +98,16 @@ def install_gemini(source_root: Path, destination: Path, force: bool) -> None:
 
 def main() -> None:
     """! @brief CLI 入口。"""
-    parser = argparse.ArgumentParser(description='安装 ros-robotics 到不同 Agent 主机')
+    parser = argparse.ArgumentParser(description='安装或卸载 ros-robotics 到不同 Agent 主机')
     parser.add_argument('--target', choices=['auto', 'codex', 'claude', 'gemini', 'all'], default='auto')
     parser.add_argument('--source-root', default=str(Path(__file__).resolve().parents[1]))
     parser.add_argument('--force', action='store_true')
+    parser.add_argument('--uninstall', action='store_true')
     args = parser.parse_args()
 
     source_root = Path(args.source_root).resolve()
     home = Path.home()
+    version = (source_root / 'VERSION').read_text(encoding='utf-8').strip() if (source_root / 'VERSION').exists() else 'unknown'
 
     if args.target == 'auto':
         targets = detect_default_targets(home)
@@ -102,16 +119,28 @@ def main() -> None:
     for target in targets:
         if target == 'codex':
             destination = codex_skill_dir(home, os.environ.get('CODEX_HOME'))
-            install_skill_tree(source_root, destination, args.force)
-            print(f'[codex] 已安装到: {destination}')
+            if args.uninstall:
+                remove_path(destination)
+                print(f'[codex] 已卸载: {destination}')
+            else:
+                install_skill_tree(source_root, destination, args.force)
+                print(f'[codex] 已安装 {version} 到: {destination}')
         elif target == 'claude':
             destination = claude_skill_dir(home)
-            install_skill_tree(source_root, destination, args.force)
-            print(f'[claude] 已安装到: {destination}')
+            if args.uninstall:
+                remove_path(destination)
+                print(f'[claude] 已卸载: {destination}')
+            else:
+                install_skill_tree(source_root, destination, args.force)
+                print(f'[claude] 已安装 {version} 到: {destination}')
         elif target == 'gemini':
             destination = gemini_command_path(home)
-            install_gemini(source_root, destination, args.force)
-            print(f'[gemini] 已安装到: {destination}')
+            if args.uninstall:
+                remove_path(destination)
+                print(f'[gemini] 已卸载: {destination}')
+            else:
+                install_gemini(source_root, destination, args.force)
+                print(f'[gemini] 已安装 {version} 到: {destination}')
 
 
 if __name__ == '__main__':
