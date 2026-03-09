@@ -127,6 +127,7 @@ TF / URDF / Nav2 / ros2_control / MCU]
 - 多机器人系统命名空间隔离与跨机通信
 - MoveIt 2 运动规划、SRDF 配置、运动学插件选择
 - ROS 2 CI/CD 最佳实践（GitHub Actions、colcon test、ament_lint）
+- Foxglove Studio / PlotJuggler 数据可视化与 mcap 离线分析
 - MCU / RTOS / 串口 / CAN / `micro-ROS` 协同开发与风险审查
 - ROS 1 → ROS 2 渐进迁移建议
 - TF 树完整性离线检查（URDF/Xacro 解析）
@@ -142,7 +143,7 @@ TF / URDF / Nav2 / ros2_control / MCU]
 ├── examples/
 ├── integrations/
 │   └── gemini/
-├── references/          # 20 个专题参考文档
+├── references/          # 21 个专题参考文档
 ├── scripts/             # 工作区检测、增强一致性检查、TF 树检查
 ├── tests/
 └── .github/
@@ -181,6 +182,7 @@ python scripts/check_ros_workspace_consistency.py /path/to/workspace
 - 多机器人：`references/multi-robot.md`
 - MoveIt 2：`references/moveit2.md`
 - CI/CD：`references/ros2-cicd.md`
+- 可视化：`references/foxglove-visualization.md`
 
 ## 真实案例
 
@@ -222,7 +224,7 @@ python scripts/check_ros_workspace_consistency.py /path/to/workspace
 - [x] 更强的依赖 / 资源安装规则检查器（深度 CMake 分析、launch 引用检查、YAML 语法检查）
 - [x] MoveIt 2 运动规划参考文档
 - [x] ROS 2 CI/CD 最佳实践（GitHub Actions + colcon test）
-- [ ] 最小示例工作区
-- [ ] Foxglove / PlotJuggler 数据可视化参考
+- [x] 最小示例工作区（`examples/minimal_ws/`，含 C++ 节点、launch、参数文件）
+- [x] Foxglove / PlotJuggler 数据可视化参考
 
 > 如果你觉得这个项目有用，欢迎给个 ⭐ Star 支持一下！

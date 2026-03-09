@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.4.0 - 2026-03-09
+
+### 新增
+
+- 新增 `examples/minimal_ws/`：最小示例工作区，含 C++ talker/listener 节点、CMakeLists.txt、launch 文件、参数 YAML，可直接 `colcon build` 运行
+- 新增 `references/foxglove-visualization.md`：Foxglove Studio / PlotJuggler 数据可视化（工具对比、连接配置、常用面板、调试工作流、常见问题）
+
+### 更新
+
+- 更新 `SKILL.md`、`README.md`：新增 Foxglove 触发条件和文档索引，Roadmap 全部完成
+- 版本升级至 `0.4.0`
+
 ## 0.3.0 - 2026-03-09
 
 ### 新增参考文档

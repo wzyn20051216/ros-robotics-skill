@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>minimal_demo</name>
+  <version>0.1.0</version>
+  <description>
+    ROS 2 最小示例功能包，演示发布者/订阅者模式、launch 文件和参数配置的完整用法。
+    A minimal ROS 2 demo package illustrating publisher/subscriber pattern,
+    launch files, and parameter configuration best practices.
+  </description>
+
+  <!-- 维护者信息 -->
+  <maintainer email="maintainer@example.com">ros-robotics-skill</maintainer>
+
+  <!-- 开源许可证 -->
+  <license>Apache-2.0</license>
+
+  <!-- 构建工具依赖 -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- 运行时 + 构建时依赖 -->
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+
+  <!-- 测试依赖 -->
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <!-- 导出构建类型 -->
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
