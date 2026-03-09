@@ -4,42 +4,36 @@
 ![License](https://img.shields.io/github/license/wzyn20051216/ros-robotics-skill)
 ![Stars](https://img.shields.io/github/stars/wzyn20051216/ros-robotics-skill?style=social)
 
-一个面向 **ROS 1 / ROS 2 机器人开发、迁移与联调** 的开源工程化 skill / prompt pack。
+一个面向 **ROS 1 / ROS 2 机器人开发、迁移与联调** 的开源工程化 skill / prompt pack，适配 **Codex、Claude Code、Gemini CLI**。
 
-> English summary: see `README.en.md`
+英文版见：[README.en.md](README.en.md)
 
-![workflow](docs/images/ros-robotics-flow.svg)
+## 它到底解决什么问题
 
-它不是“ROS 关键词词典”，而是一套面向真实机器人项目的工作流：
-
-- 先识别工作区和构建系统
-- 再定位 `package.xml`、`CMakeLists.txt`、`launch`、`TF`、`URDF/Xacro`、Nav2、`ros2_control`、MCU / `micro-ROS` 链路问题
-- 最后给出 **最小可验证修改** 和 **最小回归命令**
-
-## Why this project
-
-多数通用 AI 提示词在 ROS 场景里有几个典型问题：
+大多数通用 AI 提示词在 ROS 项目里有 4 个通病：
 
 - 分不清 `catkin` 和 `ament`
-- 只会改代码，不会先排查 TF、时间戳、坐标系、单位和资源安装
-- 看见 `micro-ROS` 就乱上，不会先判断 Linux 侧桥接是否更合理
-- 不知道 Nav2 和 `ros2_control` 的联调顺序
+- 看见问题先改代码，不先排 TF、时间戳、frame、单位和资源安装
+- 不知道 Nav2、`ros2_control`、底盘反馈、`/cmd_vel` 的联调顺序
+- 看见 MCU 就想上 `micro-ROS`，不会先判断 Linux 侧桥接是否更简单
 
-这个项目就是为了解决这些问题。
+这个项目就是专门解决这些问题的。
 
-## 支持范围
+## 支持哪些主机
 
 | Host | 集成方式 | 安装位置 |
 | --- | --- | --- |
 | Codex | 原生 skill | `~/.codex/skills/ros-robotics` |
 | Claude Code | 原生 skill | `~/.claude/skills/ros-robotics` |
-| Gemini CLI | 自定义命令包 | `~/.gemini/commands/ros-robotics.md` |
+| Gemini CLI | 命令包 | `~/.gemini/commands/ros-robotics.md` |
 
-> 说明：Gemini CLI 当前采用原生命令扩展而不是 `SKILL.md` 目录结构，因此这里提供的是 **等价工作流命令包**。
+> 说明：Gemini CLI 当前没有与 `SKILL.md` 完全等价的原生 skill 目录机制，所以这里提供的是 **等价工作流命令包**。
 
-## 一键安装
+## 一条命令安装
 
 ### Linux / macOS
+
+自动识别并安装到可用主机：
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/wzyn20051216/ros-robotics-skill/main/install.sh | bash
@@ -55,6 +49,8 @@ curl -fsSL https://raw.githubusercontent.com/wzyn20051216/ros-robotics-skill/mai
 
 ### Windows PowerShell
 
+自动识别并安装到可用主机：
+
 ```powershell
 irm https://raw.githubusercontent.com/wzyn20051216/ros-robotics-skill/main/install.ps1 | iex
 ```
@@ -67,12 +63,34 @@ $env:ROS_ROBOTICS_TARGET='claude'; irm https://raw.githubusercontent.com/wzyn200
 $env:ROS_ROBOTICS_TARGET='gemini'; irm https://raw.githubusercontent.com/wzyn20051216/ros-robotics-skill/main/install.ps1 | iex
 ```
 
-## 卸载
+### 本地源码安装
+
+```bash
+git clone https://github.com/wzyn20051216/ros-robotics-skill.git
+cd ros-robotics-skill
+python scripts/install.py --target all --force
+```
+
+### 卸载
 
 ```bash
 python scripts/install.py --target codex --uninstall
 python scripts/install.py --target claude --uninstall
 python scripts/install.py --target gemini --uninstall
+```
+
+## 工作流总览
+
+```mermaid
+flowchart LR
+    A[识别工作区
+ROS1 / ROS2 / mixed] --> B[检查 package.xml
+CMakeLists.txt / install 规则]
+    B --> C[按专题加载文档
+TF / URDF / Nav2 / ros2_control / MCU]
+    C --> D[小步修改]
+    D --> E[最小验证
+构建 / 运行 / 回归]
 ```
 
 ## 核心能力
@@ -102,7 +120,7 @@ python scripts/install.py --target gemini --uninstall
 └── .github/
 ```
 
-## 快速上手
+## 5 分钟上手
 
 ### 1. 识别工作区
 
@@ -156,6 +174,6 @@ python scripts/check_ros_workspace_consistency.py /path/to/workspace
 - [x] TF / URDF / Nav2 / `ros2_control` / `micro-ROS` 参考文档
 - [x] Codex / Claude / Gemini 安装器
 - [x] 测试与 CI
-- [x] 英文摘要与 README.en
+- [x] 英文 README
 - [ ] 最小示例工作区
 - [ ] 更强的依赖 / 资源安装规则检查器
