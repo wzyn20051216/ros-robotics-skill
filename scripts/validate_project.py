@@ -21,7 +21,7 @@ def main() -> None:
     missing = [item for item in REQUIRED if not Path(item).exists()]
     if missing:
         raise SystemExit(f'缺少关键文件: {missing}')
-    print('关键文件检查通过')
+    print('Project validation passed')
 
 
 if __name__ == '__main__':
