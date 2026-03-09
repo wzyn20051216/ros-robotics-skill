@@ -125,9 +125,12 @@ TF / URDF / Nav2 / ros2_control / MCU]
 - Docker 容器化 ROS 开发与多节点编排
 - 自定义 `msg` / `srv` / `action` 接口定义
 - 多机器人系统命名空间隔离与跨机通信
+- MoveIt 2 运动规划、SRDF 配置、运动学插件选择
+- ROS 2 CI/CD 最佳实践（GitHub Actions、colcon test、ament_lint）
 - MCU / RTOS / 串口 / CAN / `micro-ROS` 协同开发与风险审查
 - ROS 1 → ROS 2 渐进迁移建议
 - TF 树完整性离线检查（URDF/Xacro 解析）
+- 增强型依赖 / 资源安装规则一致性检查（深度 CMake 分析、launch 引用、YAML 语法）
 
 ## 项目结构
 
@@ -139,8 +142,8 @@ TF / URDF / Nav2 / ros2_control / MCU]
 ├── examples/
 ├── integrations/
 │   └── gemini/
-├── references/          # 18 个专题参考文档
-├── scripts/             # 工作区检测、一致性检查、TF 树检查
+├── references/          # 20 个专题参考文档
+├── scripts/             # 工作区检测、增强一致性检查、TF 树检查
 ├── tests/
 └── .github/
 ```
@@ -176,6 +179,8 @@ python scripts/check_ros_workspace_consistency.py /path/to/workspace
 - Docker：`references/docker-ros.md`
 - 自定义接口：`references/custom-interfaces.md`
 - 多机器人：`references/multi-robot.md`
+- MoveIt 2：`references/moveit2.md`
+- CI/CD：`references/ros2-cicd.md`
 
 ## 真实案例
 
@@ -214,10 +219,10 @@ python scripts/check_ros_workspace_consistency.py /path/to/workspace
 - [x] 高级排障 Playbook（TF 断裂、参数失效、launch 部分失败、性能异常）
 - [x] 8 个真实案例覆盖 QoS / Docker / SLAM / Lifecycle / 多机器人
 - [x] TF 树完整性离线检查脚本
+- [x] 更强的依赖 / 资源安装规则检查器（深度 CMake 分析、launch 引用检查、YAML 语法检查）
+- [x] MoveIt 2 运动规划参考文档
+- [x] ROS 2 CI/CD 最佳实践（GitHub Actions + colcon test）
 - [ ] 最小示例工作区
-- [ ] 更强的依赖 / 资源安装规则检查器
-- [ ] MoveIt 2 运动规划参考文档
-- [ ] ROS 2 CI/CD 最佳实践（GitHub Actions + colcon test）
 - [ ] Foxglove / PlotJuggler 数据可视化参考
 
 > 如果你觉得这个项目有用，欢迎给个 ⭐ Star 支持一下！

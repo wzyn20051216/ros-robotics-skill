@@ -24,10 +24,19 @@
 - 扩充 `examples/case-studies.md`：新增 5 个高级案例（QoS 丢帧、Docker 节点发现、SLAM 飘移、Lifecycle 失败、多机器人冲突）
 - 新增 `scripts/check_tf_tree.py`：URDF/Xacro TF 树完整性离线检查（单根性、悬挂 link、重复名称、循环依赖）
 
+### 新增 MoveIt 2 与 CI/CD
+
+- 新增 `references/moveit2.md`：MoveIt 2 运动规划（SRDF、运动学插件、规划器配置、C++ API、Gazebo 联合仿真）
+- 新增 `references/ros2-cicd.md`：ROS 2 CI/CD 最佳实践（GitHub Actions 模板、ament_lint、覆盖率、多平台 CI）
+
+### 增强工具
+
+- 增强 `scripts/check_ros_workspace_consistency.py`：深度 CMake 分析（target_link_libraries / install(TARGETS) / ament_target_dependencies）、package.xml 冗余检查、launch 文件引用检查、YAML 语法检查、扩展资源目录检查（maps/worlds/models/meshes）
+
 ### 更新
 
-- 更新 `SKILL.md`：新增 Gazebo、Docker、Lifecycle、rosbag、SLAM、QoS、自定义接口、多机器人触发条件和文档索引
-- 更新 `README.md`：更新核心能力、项目结构、Roadmap，新增 Star 引导
+- 更新 `SKILL.md`：新增 Gazebo、Docker、Lifecycle、rosbag、SLAM、QoS、自定义接口、多机器人、MoveIt 2、CI/CD 触发条件和文档索引
+- 更新 `README.md`：核心能力扩展至 19 项、20 个参考文档、Roadmap 更新，新增 Star 引导
 - 版本升级至 `0.3.0`
 
 ## 0.2.1 - 2026-03-09
