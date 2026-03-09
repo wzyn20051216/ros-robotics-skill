@@ -17,7 +17,7 @@ import os
 import subprocess
 import sys
 import xml.etree.ElementTree as ET
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from typing import Optional
 
 
@@ -224,10 +224,6 @@ def _build_tree_lines(
     children = children_map.get(node, [])
     for i, (child, jtype) in enumerate(children):
         child_is_last = (i == len(children) - 1)
-        # 在子节点名称后附注关节类型
-        child_display = f'{child} ({jtype})'
-        # 临时替换 node 名称后再递归
-        sub_connector = '└── ' if child_is_last else '├── '
         sub_lines = _build_tree_lines(child, children_map, child_prefix, child_is_last)
         # 修正第一行（已由递归生成，格式已正确）
         lines.extend(sub_lines)
