@@ -56,6 +56,14 @@ class DetectWorkspaceTests(unittest.TestCase):
         self.assertEqual(result.workspace_type, 'ros2-colcon')
         self.assertEqual(result.ros2_packages, 1)
 
+    def test_handles_broken_package_xml(self):
+        package_dir = self.root / 'src' / 'broken_pkg'
+        package_dir.mkdir(parents=True, exist_ok=True)
+        (package_dir / 'package.xml').write_text('<package><name>broken_pkg</name>', encoding='utf-8')
+        (package_dir / 'CMakeLists.txt').write_text('cmake_minimum_required(VERSION 3.8)', encoding='utf-8')
+        result = self.module.detect_workspace(self.root)
+        self.assertEqual(result.unknown_packages, 1)
+
 
 if __name__ == '__main__':
     unittest.main()

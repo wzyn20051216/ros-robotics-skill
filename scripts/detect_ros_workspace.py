@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import xml.etree.ElementTree as ET
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Iterable
@@ -49,28 +50,42 @@ def looks_like_ament_python(setup_py_text: str) -> bool:
     return 'share/ament_index/resource_index/packages' in setup_py_text or 'ament_index' in setup_py_text
 
 
+def parse_package_xml(path: Path) -> tuple[str | None, set[str]]:
+    """! @brief 从 `package.xml` 提取包名与 buildtool 依赖；失败时返回空结果。"""
+    try:
+        tree = ET.parse(path)
+    except ET.ParseError:
+        return None, set()
+    root = tree.getroot()
+    name_node = root.find('name')
+    package_name = name_node.text.strip() if name_node is not None and name_node.text else None
+    buildtool_depends: set[str] = set()
+    for node in root.findall('buildtool_depend'):
+        if node.text and node.text.strip():
+            buildtool_depends.add(node.text.strip())
+    return package_name, buildtool_depends
+
+
 def detect_package(package_xml: Path) -> PackageInfo:
     """! @brief 根据 `package.xml` 与构建文件判断包类型。"""
     package_dir = package_xml.parent
     xml_text = read_text_if_exists(package_xml)
     cmake_text = read_text_if_exists(package_dir / 'CMakeLists.txt')
     setup_py_text = read_text_if_exists(package_dir / 'setup.py')
+    package_name, buildtool_depends = parse_package_xml(package_xml)
     markers: list[str] = []
-
-    name_match = re.search(r'<name>\s*([^<\s]+)\s*</name>', xml_text)
-    package_name = name_match.group(1) if name_match else package_dir.name
 
     ros1_hits = 0
     ros2_hits = 0
 
-    if re.search(r'<buildtool_depend>\s*catkin\s*</buildtool_depend>', xml_text):
+    if 'catkin' in buildtool_depends:
         ros1_hits += 2
         markers.append('package.xml:catkin')
     if 'find_package(catkin' in cmake_text or 'catkin_package(' in cmake_text:
         ros1_hits += 2
         markers.append('cmake:catkin')
 
-    if re.search(r'<buildtool_depend>\s*ament_(cmake|python)\s*</buildtool_depend>', xml_text):
+    if {'ament_cmake', 'ament_python'} & buildtool_depends:
         ros2_hits += 2
         markers.append('package.xml:ament')
     if 'find_package(ament_cmake' in cmake_text or 'ament_package(' in cmake_text:
@@ -89,7 +104,7 @@ def detect_package(package_xml: Path) -> PackageInfo:
     else:
         build_type = 'unknown'
 
-    return PackageInfo(package_name, str(package_dir), build_type, markers)
+    return PackageInfo(package_name or package_dir.name, str(package_dir), build_type, markers)
 
 
 def iter_package_xml_files(root: Path) -> Iterable[Path]:
