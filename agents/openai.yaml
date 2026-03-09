@@ -1,3 +1,4 @@
 interface:
   display_name: "ROS Robotics"
-  short_description: "ROS1/ROS2 机器人开发与联调"
+  short_description: "ROS1/ROS2 机器人开发、迁移与联调"
+  default_prompt: "分析当前 ROS 工作区，识别构建系统与问题链路，优先给出最小可验证修改和回归命令。"

@@ -1,0 +1,45 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ['3.11']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: 编译检查
+        run: python -m compileall scripts tests
+
+      - name: 单元测试
+        run: python -m unittest discover -s tests -p "test_*.py"
+
+      - name: 关键文件检查
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          required = [
+              'SKILL.md',
+              'README.md',
+              'LICENSE',
+              'scripts/install.py',
+              'integrations/gemini/commands/ros-robotics.md',
+          ]
+          missing = [item for item in required if not Path(item).exists()]
+          if missing:
+              raise SystemExit(f'缺少关键文件: {missing}')
+          print('关键文件检查通过')
+          PY
