@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.3.0 - 2026-03-09
+
+### 新增参考文档
+
+- 新增 `references/gazebo-simulation.md`：Gazebo 仿真集成（Classic vs Gz、传感器配置、ros_gz_bridge、launch 集成）
+- 新增 `references/lifecycle-and-components.md`：Lifecycle 节点与组件化（状态转换、rclcpp_components、容器化运行）
+- 新增 `references/dds-qos-networking.md`：DDS / QoS / 网络配置（RMW 选择、QoS Profile、多机网络、Discovery Server）
+- 新增 `references/rosbag-diagnostics.md`：rosbag2 录制回放与诊断（mcap 格式、离线调试工作流）
+- 新增 `references/slam-mapping.md`：SLAM 建图与定位（Cartographer、SLAM Toolbox、地图管理、IMU 融合）
+- 新增 `references/docker-ros.md`：Docker 容器化 ROS 开发（多阶段构建、GUI 转发、docker-compose 编排）
+- 新增 `references/custom-interfaces.md`：自定义 msg/srv/action（语法、包结构、CMake 配置、版本兼容）
+- 新增 `references/multi-robot.md`：多机器人系统（命名空间隔离、TF 隔离、跨机通信、时间同步）
+
+### 加深现有文档
+
+- 加深 `references/navigation2.md`：补充 Nav2 参数调优模板、Costmap 配置示例、AMCL 验证、/cmd_vel 链路调试
+- 加深 `references/ros2-control.md`：补充控制器 YAML 配置模板、硬件接口 URDF 示例、调试命令
+- 加深 `references/debug-playbooks.md`：新增 4 个高级 Playbook（TF 断裂、参数失效、launch 部分失败、性能异常）
+
+### 案例与脚本
+
+- 扩充 `examples/case-studies.md`：新增 5 个高级案例（QoS 丢帧、Docker 节点发现、SLAM 飘移、Lifecycle 失败、多机器人冲突）
+- 新增 `scripts/check_tf_tree.py`：URDF/Xacro TF 树完整性离线检查（单根性、悬挂 link、重复名称、循环依赖）
+
+### 更新
+
+- 更新 `SKILL.md`：新增 Gazebo、Docker、Lifecycle、rosbag、SLAM、QoS、自定义接口、多机器人触发条件和文档索引
+- 更新 `README.md`：更新核心能力、项目结构、Roadmap，新增 Star 引导
+- 版本升级至 `0.3.0`
+
 ## 0.2.1 - 2026-03-09
 
 - 修复 Windows GitHub Actions 编码问题

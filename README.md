@@ -115,10 +115,19 @@ TF / URDF / Nav2 / ros2_control / MCU]
 - `catkin_make`、`catkin build`、`colcon build` 工作流
 - `package.xml` / `CMakeLists.txt` / 资源安装规则一致性检查
 - `URDF/Xacro`、`robot_state_publisher`、RViz、TF 树调试
-- Navigation2、`/cmd_vel` 控制链路、定位与导航联调
+- Navigation2 参数调优、Costmap 配置、定位与导航联调
 - `ros2_control` 硬件接口、控制器 YAML、读写周期问题定位
+- Gazebo / Ignition 仿真集成、传感器配置、`ros_gz_bridge`
+- Lifecycle 节点与 `rclcpp_components` 组件化
+- DDS / QoS 配置、多机网络、RMW 选择
+- `rosbag2` 录制回放、`mcap`、离线诊断工作流
+- SLAM 建图（Cartographer、SLAM Toolbox）与定位
+- Docker 容器化 ROS 开发与多节点编排
+- 自定义 `msg` / `srv` / `action` 接口定义
+- 多机器人系统命名空间隔离与跨机通信
 - MCU / RTOS / 串口 / CAN / `micro-ROS` 协同开发与风险审查
 - ROS 1 → ROS 2 渐进迁移建议
+- TF 树完整性离线检查（URDF/Xacro 解析）
 
 ## 项目结构
 
@@ -130,8 +139,8 @@ TF / URDF / Nav2 / ros2_control / MCU]
 ├── examples/
 ├── integrations/
 │   └── gemini/
-├── references/
-├── scripts/
+├── references/          # 18 个专题参考文档
+├── scripts/             # 工作区检测、一致性检查、TF 树检查
 ├── tests/
 └── .github/
 ```
@@ -159,6 +168,14 @@ python scripts/check_ros_workspace_consistency.py /path/to/workspace
 - 导航：`references/navigation2.md`
 - 控制：`references/ros2-control.md`
 - 嵌入式：`references/micro-ros-and-embedded.md`
+- 仿真：`references/gazebo-simulation.md`
+- Lifecycle / 组件：`references/lifecycle-and-components.md`
+- DDS / QoS / 网络：`references/dds-qos-networking.md`
+- 录制回放：`references/rosbag-diagnostics.md`
+- SLAM：`references/slam-mapping.md`
+- Docker：`references/docker-ros.md`
+- 自定义接口：`references/custom-interfaces.md`
+- 多机器人：`references/multi-robot.md`
 
 ## 真实案例
 
@@ -191,5 +208,16 @@ python scripts/check_ros_workspace_consistency.py /path/to/workspace
 - [x] Codex / Claude / Gemini 安装器
 - [x] 测试与 CI
 - [x] 英文 README
+- [x] Gazebo / Docker / Lifecycle / rosbag / SLAM / DDS·QoS / 自定义接口 / 多机器人参考文档
+- [x] Nav2 参数调优模板与 Costmap 配置示例
+- [x] `ros2_control` 控制器 YAML 配置模板
+- [x] 高级排障 Playbook（TF 断裂、参数失效、launch 部分失败、性能异常）
+- [x] 8 个真实案例覆盖 QoS / Docker / SLAM / Lifecycle / 多机器人
+- [x] TF 树完整性离线检查脚本
 - [ ] 最小示例工作区
 - [ ] 更强的依赖 / 资源安装规则检查器
+- [ ] MoveIt 2 运动规划参考文档
+- [ ] ROS 2 CI/CD 最佳实践（GitHub Actions + colcon test）
+- [ ] Foxglove / PlotJuggler 数据可视化参考
+
+> 如果你觉得这个项目有用，欢迎给个 ⭐ Star 支持一下！
